@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+firebase-admin
+lxml
+python-dateutil
+pydantic
+python-multipart
