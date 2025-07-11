@@ -33,7 +33,7 @@ async def upload_attendees(file: UploadFile = File(...)):
                     skipped += 1
                     continue
 
-                doc_ref = db.collection("testentry").document(email)
+                doc_ref = db.collection("attendee").document(email)
                 if doc_ref.get().exists:
                     skipped += 1
                     continue

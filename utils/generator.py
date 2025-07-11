@@ -127,25 +127,40 @@ async def generateBadge(DetailsPayload):
     parts = name.split()
     n = len(parts)
 
-    for i, part in enumerate(parts):
-        if n == 2:
-            # Two tspans with specific positions
-            if i == 0:
-                tspan = etree.SubElement(name_text_el, "tspan", x="70%", y="30%")
+    for i in range(len(parts)):
+        if len(parts) <= 3:
+            # Same logic as before
+            if len(parts) == 2:
+                if i == 0:
+                    tspan = etree.SubElement(name_text_el, "tspan", x="70%", y="30%")
+                else:
+                    tspan = etree.SubElement(name_text_el, "tspan", x="90%", dy="1.2em")
+            elif len(parts) == 3:
+                if i == 0:
+                    tspan = etree.SubElement(name_text_el, "tspan", x="70%", y="30%")
+                else:
+                    tspan = etree.SubElement(name_text_el, "tspan", x="70%", dy="1.2em")
             else:
-                tspan = etree.SubElement(name_text_el, "tspan", x="90%", dy="1.2em")
-        elif n == 3:
-            # Three tspans with specific positions
-            if i == 0:
-                tspan = etree.SubElement(name_text_el, "tspan", x="70%", y="30%")
-            else:
-                tspan = etree.SubElement(name_text_el, "tspan", x="70%", dy="1.2em")
+                tspan = etree.SubElement(
+                    name_text_el, "tspan", x="50%", dy="0" if i == 0 else "1.2em"
+                )
+            tspan.text = parts[i].title()
+
         else:
-            # Default: centered tspans stacked vertically
-            tspan = etree.SubElement(
-                name_text_el, "tspan", x="50%", dy="0" if i == 0 else "1.2em"
-            )
-        tspan.text = part.title()
+            # More than 3 words
+            if i == 0:
+                tspan = etree.SubElement(name_text_el, "tspan", x="70%", y="30%")
+                tspan.text = parts[0].title()
+            elif i == 1:
+                tspan = etree.SubElement(name_text_el, "tspan", x="70%", dy="1.2em")
+                tspan.text = parts[1].title()
+            elif i == 2:
+                # Remaining words joined on 3rd line
+                remaining = " ".join(parts[2:])
+                tspan = etree.SubElement(name_text_el, "tspan", x="70%", dy="1.2em")
+                tspan.text = remaining.title()
+                break  # Done after 3rd line
+
 
     id = uuid.uuid4()
 

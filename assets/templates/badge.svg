@@ -625,7 +625,7 @@
   text-anchor="middle"
   dominant-baseline="middle"
   lengthAdjust="spacingAndGlyphs"
->{name}</text>
+></text>
 <text id="ATTENDEE" fill="white" xml:space="preserve" style="white-space: pre" font-family="Product Sans Medium" font-size="40" font-weight="500" letter-spacing="0em"><tspan x="186" y="509.14">ATTENDEE</tspan></text>
 </g>
 </g>

@@ -21,7 +21,7 @@ async def get_files(fileAccessPayload):
     email = fileAccessPayload.email
 
     db = firestore.client()
-    user_doc = db.collection("testentry").document(email).get()
+    user_doc = db.collection(role).document(email).get()
     if not user_doc.exists:
         return JSONResponse(
             status_code=404,
@@ -43,26 +43,26 @@ async def get_files(fileAccessPayload):
         certi_id = user_data.get("certificateId")
         badge_id = user_data.get("badgeId")
         cert_path = f"certificates/{certi_id}.svg"
-        badge_path = f"badges/{badge_id}.svg"
+        badge_path = f"badges/attendee/{badge_id}.svg"
         urls["certificate"] = generate_signed_url(cert_path)
         urls["badge"] = generate_signed_url(badge_path)
 
     elif role == "speaker":
         # Return only badge
         badge_id = user_data.get("badgeId")
-        badge_path = f"badges/{badge_id}.svg"
+        badge_path = f"badges/speaker/{badge_id}.svg"
         urls["badge"] = generate_signed_url(badge_path)
 
     elif role == "organizer":
         # Return only badge
         badge_id = user_data.get("badgeId")
-        badge_path = f"badges/{badge_id}.svg"
+        badge_path = f"badges/organizer/{badge_id}.svg"
         urls["badge"] = generate_signed_url(badge_path)
 
     elif role == "voulnteer":
         # Return only badge
         badge_id = user_data.get("badgeId")
-        badge_path = f"badges/{badge_id}.svg"
+        badge_path = f"badges/voulnteer/{badge_id}.svg"
         urls["badge"] = generate_signed_url(badge_path)
 
     else:
